@@ -49,17 +49,34 @@ app.get("/", async (req, res)=>{
 
 // Create a dynamic PATCH route handler for "/update/{name}" that modifies the population of the country specified in the path (3 points)
 // Test this route on post man
+app.patch("/update/:cName", async (req, res)=>{
+  const result = await Country.findOneAndDelete({
+    {
+  country: req.params.country
+    },
+    {
+      population: req.params.population
+    },
 
+  })
+  res.json(result)
+})
 
 
 // Create a DELETE route handler for "/delete/country" that deletes a country of your choice (3 points)
 // Test this route on post man
-
+app.patch("/country/delete/:name", async (req, res)=>{
+  const i = req.params.name 
+  const result = await Country.findOneAndDelete({
+    name: i
+  })
+res.json(result)
+})
 
 async function startServer() {
   
     // add your SRV string with a database called countries
-  await mongoose.connect("...");
+  await mongoose.connect("mongodb+srv://SE12:CSH2025@cluster0.xfcbvkb.mongodb.net/countries?retryWrites=true&w=majority&appName=Cluster0");
 
   app.listen(3000, () => {
     console.log("Server is running");
